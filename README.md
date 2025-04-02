@@ -57,4 +57,4 @@ Para acceder como administrador:
 
 ## Autor
 
-QuinielaBadger Team 
+QuinielaBadger Team / Jose Andres Aguirre Rios
