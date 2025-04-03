@@ -16,79 +16,81 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar/Menú lateral -->
-            <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" id="sidebarMenu">
-                <div class="position-sticky pt-3">
-                    <div class="text-center mb-4">
-                        <h2 class="text-white">QuinielaBadger</h2>
+            <div class="col-auto p-0">
+                <div class="sidebar" id="sidebarMenu">
+                    <!-- Botón de hamburguesa -->
+                    <button class="navbar-toggler" type="button" id="sidebarToggle">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    
+                    <div class="position-sticky pt-3">
+                        <div class="text-center mb-4">
+                            <img src="images/logo.png" alt="QuinielaBadger Logo" class="logo-img logo-sidebar">
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active text-white" aria-current="page" href="#inicio">
+                                    <i class="bi bi-house-door"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#quienes-somos">
+                                    <i class="bi bi-people"></i>
+                                    <span>Quiénes Somos</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#ultimos-ganadores">
+                                    <i class="bi bi-trophy"></i>
+                                    <span>Últimos Ganadores</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id="nav-registro">
+                                <a class="nav-link text-white" href="#registrarse">
+                                    <i class="bi bi-person-plus"></i>
+                                    <span>Registrarse</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id="nav-login">
+                                <a class="nav-link text-white" href="#iniciar-sesion">
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    <span>Iniciar Sesión</span>
+                                </a>
+                            </li>
+                            <!-- Opciones solo para administradores -->
+                            <li class="nav-item admin-only d-none">
+                                <a class="nav-link text-white" href="#tesoreria">
+                                    <i class="bi bi-cash-coin"></i>
+                                    <span>Tesorería</span>
+                                </a>
+                            </li>
+                            <li class="nav-item admin-only d-none">
+                                <a class="nav-link text-white" href="#crear-quiniela">
+                                    <i class="bi bi-plus-circle"></i>
+                                    <span>Crear Quiniela</span>
+                                </a>
+                            </li>
+                            <li class="nav-item admin-only d-none">
+                                <a class="nav-link text-white" href="#registro-quinielas">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span>Registro de Quinielas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item user-logged d-none">
+                                <a class="nav-link text-white" href="#" id="btn-logout">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Cerrar Sesión</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active text-white" aria-current="page" href="#inicio">
-                                <i class="bi bi-house-door me-2"></i>
-                                Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#quienes-somos">
-                                <i class="bi bi-people me-2"></i>
-                                Quiénes Somos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#ultimos-ganadores">
-                                <i class="bi bi-trophy me-2"></i>
-                                Últimos Ganadores
-                            </a>
-                        </li>
-                        <li class="nav-item" id="nav-registro">
-                            <a class="nav-link text-white" href="#registrarse">
-                                <i class="bi bi-person-plus me-2"></i>
-                                Registrarse
-                            </a>
-                        </li>
-                        <li class="nav-item" id="nav-login">
-                            <a class="nav-link text-white" href="#iniciar-sesion">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
-                                Iniciar Sesión
-                            </a>
-                        </li>
-                        <!-- Opciones solo para administradores -->
-                        <li class="nav-item admin-only d-none">
-                            <a class="nav-link text-white" href="#tesoreria">
-                                <i class="bi bi-cash-coin me-2"></i>
-                                Tesorería
-                            </a>
-                        </li>
-                        <li class="nav-item admin-only d-none">
-                            <a class="nav-link text-white" href="#crear-quiniela">
-                                <i class="bi bi-plus-circle me-2"></i>
-                                Crear Quiniela
-                            </a>
-                        </li>
-                        <li class="nav-item admin-only d-none">
-                            <a class="nav-link text-white" href="#registro-quinielas">
-                                <i class="bi bi-pencil-square me-2"></i>
-                                Registro de Quinielas
-                            </a>
-                        </li>
-                        <li class="nav-item user-logged d-none">
-                            <a class="nav-link text-white" href="#" id="btn-logout">
-                                <i class="bi bi-box-arrow-right me-2"></i>
-                                Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
 
             <!-- Contenido principal -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <main class="col px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">QuinielaBadger</h1>
-                    <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        <i class="bi bi-list"></i>
-                    </button>
                 </div>
 
                 <!-- Sección Inicio -->

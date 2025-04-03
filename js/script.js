@@ -52,6 +52,67 @@ document.addEventListener('DOMContentLoaded', function() {
     const infoCierreSpan = document.getElementById('info-cierre');
     const infoCostoSpan = document.getElementById('info-costo');
 
+    // Manejo del menú lateral
+    const sidebar = document.getElementById('sidebarMenu');
+    const mainContent = document.querySelector('main');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    // Función para actualizar el estado del contenido principal
+    function updateMainContentState() {
+        if (sidebar.classList.contains('show')) {
+            mainContent.classList.add('sidebar-expanded');
+        } else {
+            mainContent.classList.remove('sidebar-expanded');
+        }
+    }
+
+    // Escuchar eventos del sidebar
+    sidebar.addEventListener('show.bs.collapse', function () {
+        updateMainContentState();
+    });
+
+    sidebar.addEventListener('hide.bs.collapse', function () {
+        updateMainContentState();
+    });
+
+    // Función para actualizar el estado del menú
+    function toggleSidebar() {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('sidebar-collapsed');
+        
+        // Guardar el estado en localStorage
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        localStorage.setItem('sidebarState', isCollapsed ? 'collapsed' : 'expanded');
+    }
+
+    // Manejar clic en el botón de hamburguesa
+    sidebarToggle.addEventListener('click', toggleSidebar);
+
+    // Cerrar menú al hacer clic en un enlace en dispositivos móviles
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('expanded');
+            }
+        });
+    });
+
+    // Restaurar el estado del menú desde localStorage
+    const sidebarState = localStorage.getItem('sidebarState');
+    if (sidebarState === 'collapsed') {
+        sidebar.classList.add('collapsed');
+        mainContent.classList.add('sidebar-collapsed');
+    }
+
+    // Manejar cambios de tamaño de ventana
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.remove('expanded');
+            mainContent.classList.remove('sidebar-collapsed');
+        }
+    });
+
     // Función para mostrar una sección específica
     function showSection(sectionId) {
         // Ocultar todas las secciones
