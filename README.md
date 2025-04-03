@@ -1,39 +1,50 @@
-# QuinielaBadger
+# QuinielaBadger - Plataforma de Quinielas Deportivas
 
-Sitio web para QuinielaBadger.com, una plataforma de quinielas deportivas especializada en fútbol de la Liga MX y otros torneos.
+## Descripción
+QuinielaBadger es una aplicación web para la gestión de quinielas deportivas de fútbol, especialmente enfocada en la Liga MX. Permite a los usuarios participar en quinielas, ver resultados y administrar su cuenta.
 
-## Contenido
+## Cómo ejecutar la aplicación
 
-El sitio web incluye las siguientes secciones:
+### Opción 1: Usando un servidor web local (recomendado)
+Para una experiencia completa y aprovechar todas las funcionalidades, se recomienda ejecutar la aplicación a través de un servidor web local:
 
-- **Inicio**: Página principal con información destacada
-- **Quiénes Somos**: Información sobre la empresa y su misión
-- **Últimos Ganadores**: Listado de los ganadores recientes de quinielas
-- **Registro**: Formulario para nuevos usuarios
-- **Inicio de Sesión**: Acceso para usuarios existentes
+1. Instala Node.js desde [nodejs.org](https://nodejs.org/)
+2. Abre una terminal en la carpeta del proyecto
+3. Ejecuta el comando `npx http-server` o `python -m http.server` (si tienes Python instalado)
+4. Abre tu navegador y ve a `http://localhost:8080` o la URL que te indique el servidor
 
-Además, para el administrador (usuario: AdminBadger, contraseña: AdminBadger2025) hay secciones adicionales:
+### Opción 2: Versión compatible para abrir localmente
+Si no puedes instalar un servidor web, hemos incluido una versión compatible que funciona abriendo los archivos directamente:
 
-- **Tesorería**: Gestión financiera de las quinielas
-- **Registro de Quinielas Manuales**: Para añadir quinielas manualmente
+1. Abre el archivo `index-compatible.html` en tu navegador
+2. Esta versión utiliza JavaScript tradicional sin módulos ES6 para mayor compatibilidad
 
-## Tecnologías Utilizadas
+## Características principales
 
-- HTML5
-- CSS3
-- JavaScript (ES6+)
+- Participación en quinielas deportivas de fútbol
+- Visualización de próximos partidos y resultados
+- Registro e inicio de sesión de usuarios
+- Panel de administración para gestionar quinielas
+- Seguimiento de ganadores y premios
+
+## Notas importantes
+
+- La aplicación hace uso de módulos ES6 en su versión principal, lo que puede generar problemas de CORS al abrirla directamente como archivo local.
+- La versión compatible (`index-compatible.html`) resuelve estos problemas para uso local.
+- Los datos son simulados y se almacenan localmente en el navegador.
+
+## Usuarios de prueba
+
+| Usuario | Contraseña | Tipo |
+|---------|------------|------|
+| admin   | admin123   | Administrador |
+| usuario | user123    | Usuario normal |
+
+## Tecnologías utilizadas
+
+- HTML5, CSS3, JavaScript
 - Bootstrap 5
-- Bootstrap Icons
-
-## Instrucciones de Uso
-
-1. Abre el archivo `index.html` en tu navegador web
-2. Navega por las diferentes secciones utilizando el menú lateral
-3. Regístrate como nuevo usuario o inicia sesión
-
-Para acceder como administrador:
-- Usuario: AdminBadger
-- Contraseña: AdminBadger2025
+- LocalStorage para persistencia de datos
 
 ## Estructura de Archivos
 
