@@ -69,3 +69,35 @@ Si no puedes instalar un servidor web, hemos incluido una versión compatible qu
 ## Autor
 
 QuinielaBadger Team / Jose Andres Aguirre Rios
+
+## Integración con Firebase
+
+Para configurar el proyecto con Firebase, sigue estos pasos:
+
+1. Crea una cuenta en [Firebase](https://firebase.google.com/) si aún no tienes una.
+2. Crea un nuevo proyecto en la consola de Firebase.
+3. Agrega una aplicación web a tu proyecto.
+4. Copia la configuración de Firebase que te proporcionan.
+5. Abre el archivo `js/modules/firebase.js` y reemplaza la configuración de ejemplo con tu configuración real:
+
+```javascript
+const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "tu-proyecto.firebaseapp.com",
+    projectId: "tu-proyecto",
+    storageBucket: "tu-proyecto.appspot.com",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    appId: "TU_APP_ID"
+};
+```
+
+6. En la consola de Firebase, habilita la autenticación por correo electrónico y contraseña en la sección "Authentication".
+7. Crea una base de datos Firestore en la sección "Firestore Database".
+8. Establece las reglas de seguridad según tus necesidades.
+
+### Funcionalidades habilitadas con Firebase:
+
+- Autenticación de usuarios con correo electrónico y contraseña
+- Almacenamiento de datos de quinielas en Firestore
+- Gestión de perfiles de usuario
+- Sincronización en tiempo real
