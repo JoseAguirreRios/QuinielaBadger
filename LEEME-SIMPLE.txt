@@ -1,0 +1,26 @@
+==================================
+   INSTRUCCIONES SIMPLIFICADAS
+==================================
+
+Para usar QuinielaBadger:
+
+1. Haz doble clic en el archivo "EJECUTAR-QUINIELA.bat"
+
+Esto abrirá automáticamente la aplicación en Chrome con todas las 
+correcciones necesarias para que funcione correctamente.
+
+==================================
+
+NOTAS:
+
+- Si la aplicación no se abre correctamente, cierra todas las 
+  ventanas de Chrome y ejecuta nuevamente EJECUTAR-QUINIELA.bat
+
+- Este archivo simplificado usa el archivo index-fix.html que 
+  contiene todas las correcciones necesarias para el funcionamiento
+  correcto de la barra lateral y la navegación.
+
+- Se ha eliminado la necesidad de usar múltiples archivos HTML 
+  para facilitar el uso.
+
+================================== 

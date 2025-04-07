@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuinielaBadger - Versión Simplificada</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        /* Estilos inline para evitar problemas de carga */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Estilos para el sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            width: 250px;
+            background-color: #343a40;
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar.collapsed .nav-link span,
+        .sidebar.collapsed h2,
+        .sidebar.collapsed .logo-sidebar {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link i {
+            margin-right: 0;
+            min-width: auto;
+        }
+
+        /* Estilos para el botón de hamburguesa */
+        .navbar-toggler {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1050;
+            padding: 0.5rem;
+            font-size: 1.25rem;
+            border: none;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar-toggler:hover {
+            color: #007bff;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Ajustes para el contenido principal */
+        main {
+            transition: margin-left 0.3s ease-in-out;
+            margin-left: 250px;
+        }
+
+        main.sidebar-collapsed {
+            margin-left: 60px;
+        }
+
+        .sidebar .nav-link {
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 0 30px 30px 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            color: white !important;
+            cursor: pointer !important;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            color: #17a2b8 !important;
+            transform: translateX(5px);
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #007bff;
+            color: white !important;
+        }
+
+        .sidebar .nav-link i {
+            min-width: 30px;
+            font-size: 1.25rem;
+            text-align: center;
+            transition: margin 0.3s;
+        }
+
+        .sidebar .nav-link span {
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        /* Mejoras para la barra lateral en modo móvil */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px !important;
+                transform: translateX(-250px);
+                transition: transform 0.3s ease-in-out !important;
+                z-index: 1050 !important;
+            }
+            
+            .sidebar.expanded {
+                transform: translateX(0) !important;
+            }
+            
+            .navbar-toggler {
+                z-index: 1060 !important;
+            }
+            
+            main {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+        }
+        
+        /* Estilos adicionales para secciones */
+        .section-content {
+            padding: 20px 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .jumbotron {
+            background: linear-gradient(135deg, #007bff, #004ea0);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .logo-sidebar {
+            max-width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar/Menú lateral -->
+            <div class="col-auto p-0">
+                <div class="sidebar" id="sidebarMenu">
+                    <!-- Botón de hamburguesa -->
+                    <button class="navbar-toggler" type="button" id="sidebarToggle">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    
+                    <div class="position-sticky pt-3">
+                        <div class="text-center mb-4">
+                            <img src="images/logo.png" alt="QuinielaBadger Logo" class="logo-img logo-sidebar">
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active text-white" aria-current="page" href="#inicio">
+                                    <i class="bi bi-house-door"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#quienes-somos">
+                                    <i class="bi bi-people"></i>
+                                    <span>Quiénes Somos</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#ultimos-ganadores">
+                                    <i class="bi bi-trophy"></i>
+                                    <span>Últimos Ganadores</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id="nav-registro">
+                                <a class="nav-link text-white" href="#registrarse">
+                                    <i class="bi bi-person-plus"></i>
+                                    <span>Registrarse</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id="nav-login">
+                                <a class="nav-link text-white" href="#iniciar-sesion">
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    <span>Iniciar Sesión</span>
+                                </a>
+                            </li>
+                            <!-- Opciones solo para administradores -->
+                            <li class="nav-item admin-only d-none">
+                                <a class="nav-link text-white" href="#tesoreria">
+                                    <i class="bi bi-cash-coin"></i>
+                                    <span>Tesorería</span>
+                                </a>
+                            </li>
+                            <li class="nav-item admin-only d-none">
+                                <a class="nav-link text-white" href="#crear-quiniela">
+                                    <i class="bi bi-plus-circle"></i>
+                                    <span>Crear Quiniela</span>
+                                </a>
+                            </li>
+                            <li class="nav-item admin-only d-none">
+                                <a class="nav-link text-white" href="#registro-quinielas">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span>Registro de Quinielas</span>
+                                </a>
+                            </li>
+                            <!-- Botón de cerrar sesión (solo visible al iniciar sesión) -->
+                            <li class="nav-item user-logged d-none">
+                                <a class="nav-link text-white" href="#" id="btn-logout">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Cerrar Sesión</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <main class="col px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div class="alert alert-success mb-0 w-100">
+                        <strong>Versión simplificada</strong> - Esta versión está optimizada para resolver problemas de carga e interactividad.
+                    </div>
+                </div>
+
+                <!-- Sección Inicio -->
+                <section id="inicio" class="section-content">
+                    <div class="jumbotron bg-primary text-white p-5 rounded">
+                        <h1 class="display-4">¡Bienvenido a QuinielaBadger!</h1>
+                        <p class="lead">La mejor plataforma de quinielas deportivas para fútbol de la Liga MX y más.</p>
+                        <hr class="my-4">
+                        <p>Participa en nuestras quinielas y pon a prueba tus conocimientos futbolísticos.</p>
+                        <a class="btn btn-light btn-lg" href="#registrarse" role="button">¡Comienza Ahora!</a>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-trophy display-4 text-primary"></i>
+                                    <h3 class="card-title">Grandes Premios</h3>
+                                    <p class="card-text">Gana increíbles premios pronosticando los resultados correctamente.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-people display-4 text-primary"></i>
+                                    <h3 class="card-title">Comunidad</h3>
+                                    <p class="card-text">Únete a una gran comunidad de aficionados al fútbol.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-phone display-4 text-primary"></i>
+                                    <h3 class="card-title">Fácil de Usar</h3>
+                                    <p class="card-text">Interfaz intuitiva para participar en quinielas desde cualquier dispositivo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección Quiénes Somos -->
+                <section id="quienes-somos" class="section-content d-none">
+                    <h2 class="mb-4">Quiénes Somos</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>QuinielaBadger es una plataforma dedicada a ofrecer la mejor experiencia en quinielas deportivas, especializados en la Liga MX y otros torneos de fútbol.</p>
+                            <p>Desde nuestra fundación, nos hemos comprometido a brindar un servicio confiable, transparente y emocionante para todos los aficionados al fútbol.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Nuestra Misión</h3>
+                                    <p class="card-text">Conectar a los aficionados del fútbol a través de una plataforma divertida y segura donde puedan demostrar sus conocimientos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección Últimos Ganadores -->
+                <section id="ultimos-ganadores" class="section-content d-none">
+                    <h2 class="mb-4">Últimos Ganadores</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Quiniela</th>
+                                    <th>Ganador</th>
+                                    <th>Puntos</th>
+                                    <th>Premio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Liga MX Jornada 15</td>
+                                    <td>Carlos Ramírez</td>
+                                    <td>28</td>
+                                    <td>$2,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Copa MX Final</td>
+                                    <td>Ana González</td>
+                                    <td>32</td>
+                                    <td>$3,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Liga MX Jornada 14</td>
+                                    <td>Roberto Méndez</td>
+                                    <td>25</td>
+                                    <td>$2,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Sección Registrarse -->
+                <section id="registrarse" class="section-content d-none">
+                    <h2 class="mb-4">Registrarse</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form id="registro-form">
+                                        <div class="mb-3">
+                                            <label for="nombre" class="form-label">Nombre completo</label>
+                                            <input type="text" class="form-control" id="nombre" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="usuario" class="form-label">Nombre de usuario</label>
+                                            <input type="text" class="form-control" id="usuario" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="correo" class="form-label">Correo electrónico</label>
+                                            <input type="email" class="form-control" id="correo" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Contraseña</label>
+                                            <input type="password" class="form-control" id="password" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirm-password" class="form-label">Confirmar contraseña</label>
+                                            <input type="password" class="form-control" id="confirm-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                                    </form>
+                                    <div class="mt-3 text-center">
+                                        <p>¿Ya tienes una cuenta? <a href="#iniciar-sesion" class="change-section">Iniciar sesión</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección Iniciar Sesión -->
+                <section id="iniciar-sesion" class="section-content d-none">
+                    <h2 class="mb-4">Iniciar Sesión</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form id="login-form">
+                                        <div class="mb-3">
+                                            <label for="login-usuario" class="form-label">Usuario</label>
+                                            <input type="text" class="form-control" id="login-usuario" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="login-password" class="form-label">Contraseña</label>
+                                            <input type="password" class="form-control" id="login-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                                    </form>
+                                    <div class="mt-3 text-center">
+                                        <p>¿No tienes una cuenta? <a href="#registrarse" class="change-section">Regístrate</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Secciones para Administrador -->
+                <section id="tesoreria" class="section-content d-none">
+                    <h2 class="mb-4">Tesorería</h2>
+                    <div class="alert alert-info">
+                        <h4 class="alert-heading">Sección de Administrador</h4>
+                        <p>Aquí puedes gestionar la tesorería de QuinielaBadger.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Resumen de Tesorería</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Concepto</th>
+                                            <th>Ingresos</th>
+                                            <th>Egresos</th>
+                                            <th>Saldo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Inscripciones Quiniela Jornada 15</td>
+                                            <td>$10,500.00</td>
+                                            <td>$0.00</td>
+                                            <td>$10,500.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Premios Quiniela Jornada 15</td>
+                                            <td>$0.00</td>
+                                            <td>$7,500.00</td>
+                                            <td>-$7,500.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos Operativos</td>
+                                            <td>$0.00</td>
+                                            <td>$1,000.00</td>
+                                            <td>-$1,000.00</td>
+                                        </tr>
+                                        <tr class="table-primary">
+                                            <td><strong>Total</strong></td>
+                                            <td><strong>$10,500.00</strong></td>
+                                            <td><strong>$8,500.00</strong></td>
+                                            <td><strong>$2,000.00</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="crear-quiniela" class="section-content d-none">
+                    <h2 class="mb-4">Crear Quiniela</h2>
+                    <div class="alert alert-info">
+                        <h4 class="alert-heading">Sección de Administrador</h4>
+                        <p>Aquí puedes crear nuevas quinielas para los participantes.</p>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Datos Generales de la Quiniela</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-datos-quiniela">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="nombre-quiniela" class="form-label">Nombre de la Quiniela</label>
+                                            <input type="text" class="form-control" id="nombre-quiniela" value="Liga MX Jornada" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="fecha-inicio" class="form-label">Fecha de Inicio</label>
+                                            <input type="date" class="form-control" id="fecha-inicio" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="fecha-fin" class="form-label">Fecha de Fin</label>
+                                            <input type="date" class="form-control" id="fecha-fin" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="numero-quiniela" class="form-label">Número de Quiniela</label>
+                                            <input type="number" class="form-control" id="numero-quiniela" value="1" readonly>
+                                            <small class="text-muted">Numeración consecutiva automática</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="costo-quiniela" class="form-label">Costo de Participación ($)</label>
+                                            <input type="number" class="form-control" id="costo-quiniela" value="12" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="premio-primero" class="form-label">Premio Primer Lugar</label>
+                                            <input type="text" class="form-control" id="premio-primero" 
+                                                value="El premio acumulado ejemplo 50 personas x $10 Dlls = 500 (costo para participar $2 por eso se cobran $12)" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="premio-segundo" class="form-label">Premio Segundo Lugar</label>
+                                            <input type="text" class="form-control" id="premio-segundo" value="Próxima Quiniela Gratis" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="premio-tercero" class="form-label">Premio Tercer Lugar</label>
+                                            <input type="text" class="form-control" id="premio-tercero" value="Siguiente Quiniela Paga La Mitad ($6 Dlls)" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Reglas de la Quiniela</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-reglas-quiniela">
+                                <div class="mb-3">
+                                    <label class="form-label">Reglas de la Quiniela</label>
+                                    <div class="border p-3 rounded">
+                                        <ol>
+                                            <li>
+                                                <div class="mb-2">
+                                                    <textarea class="form-control" rows="3">Colocar los posibles resultados en la recuadros (Favor de que el número sea entendible, si no sera tomado como yo lo considere. Si deseas cambiar tu resultado, tachar [x] el numero y volver a escribirlo a un lado, sobre-escribir encima de un numero se tomara como resultado invalido, o reportarlo antes de iniciar la jornada con el administrador del cambio de resultado o numero no entendible ).</textarea>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="mb-2">
+                                                    <textarea class="form-control" rows="2">Favor de subir la quiniela antes de que se juege el primer partido.</textarea>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="mb-2">
+                                                    <textarea class="form-control" rows="2">Si no rellenas un resultado o este queda en blanco, no se tomara en cuenta.</textarea>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="mb-2">
+                                                    <textarea class="form-control" rows="2">Los resultados se subiran al finalizar el ultimo partido del dia.</textarea>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="mb-2">
+                                                    <textarea class="form-control" rows="2">En caso de empate en el segundo y tercer puesto, ganara el que halla subido la quiniela primero.</textarea>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Partidos de la Quiniela</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-partidos-quiniela">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th width="10%">Fecha</th>
+                                                <th width="10%">Hora</th>
+                                                <th width="30%">Local</th>
+                                                <th width="20%">Resultado</th>
+                                                <th width="30%">Visitante</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="partidos-container">
+                                            <!-- 9 partidos de Liga MX -->
+                                            <tr>
+                                                <td>
+                                                    <select class="form-select">
+                                                        <option>Lunes</option>
+                                                        <option>Martes</option>
+                                                        <option>Miércoles</option>
+                                                        <option>Jueves</option>
+                                                        <option>Viernes</option>
+                                                        <option>Sábado</option>
+                                                        <option>Domingo</option>
+                                                    </select>
+                                                </td>
+                                                <td><input type="time" class="form-control" value="19:00"></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <select class="form-select equipo-select" data-side="local">
+                                                            <option value="Querétaro">Querétaro</option>
+                                                            <option value="Tijuana">Tijuana</option>
+                                                            <option value="Puebla">Puebla</option>
+                                                            <option value="Pachuca">Pachuca</option>
+                                                            <option value="Atlas">Atlas</option>
+                                                            <option value="San Luis">San Luis</option>
+                                                            <option value="Monterrey">Monterrey</option>
+                                                            <option value="Cruz Azul">Cruz Azul</option>
+                                                            <option value="Toluca">Toluca</option>
+                                                            <option value="América">América</option>
+                                                            <option value="Chivas">Chivas</option>
+                                                            <option value="Pumas">Pumas</option>
+                                                            <option value="Tigres">Tigres</option>
+                                                            <option value="León">León</option>
+                                                            <option value="Santos">Santos</option>
+                                                            <option value="Juárez">Juárez</option>
+                                                            <option value="Mazatlán">Mazatlán</option>
+                                                            <option value="Necaxa">Necaxa</option>
+                                                        </select>
+                                                        <div class="ms-3 text-center" style="width: 50px;">
+                                                            <img src="images/equipos/Querétaro.png" alt="Logo equipo local" class="equipo-logo" style="max-width: 45px; height: auto;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">vs</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3 text-center" style="width: 50px;">
+                                                            <img src="images/equipos/León.png" alt="Logo equipo visitante" class="equipo-logo" style="max-width: 45px; height: auto;">
+                                                        </div>
+                                                        <select class="form-select equipo-select" data-side="visitante">
+                                                            <option value="León">León</option>
+                                                            <option value="Necaxa">Necaxa</option>
+                                                            <option value="Tigres">Tigres</option>
+                                                            <option value="América">América</option>
+                                                            <option value="Juárez">Juárez</option>
+                                                            <option value="Mazatlán">Mazatlán</option>
+                                                            <option value="Chivas">Chivas</option>
+                                                            <option value="Pumas">Pumas</option>
+                                                            <option value="Santos">Santos</option>
+                                                            <option value="Querétaro">Querétaro</option>
+                                                            <option value="Tijuana">Tijuana</option>
+                                                            <option value="Puebla">Puebla</option>
+                                                            <option value="Pachuca">Pachuca</option>
+                                                            <option value="Atlas">Atlas</option>
+                                                            <option value="San Luis">San Luis</option>
+                                                            <option value="Monterrey">Monterrey</option>
+                                                            <option value="Cruz Azul">Cruz Azul</option>
+                                                            <option value="Toluca">Toluca</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-3 mb-3">
+                                    <button type="button" id="btn-add-partido" class="btn btn-success">
+                                        <i class="bi bi-plus-circle"></i> Agregar Partido
+                                    </button>
+                                    <button type="button" id="btn-remove-partido" class="btn btn-danger ms-2">
+                                        <i class="bi bi-trash"></i> Eliminar Último Partido
+                                    </button>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="include-other-league">
+                                        <label class="form-check-label" for="include-other-league">
+                                            Incluir partido de otra liga
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div id="other-league-partido" class="mb-3 d-none border p-3 rounded border-success">
+                                    <h5>Partido de otra liga</h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Liga</label>
+                                                <select class="form-select" id="otra-liga-select">
+                                                    <option>Premier League</option>
+                                                    <option>La Liga</option>
+                                                    <option>Serie A</option>
+                                                    <option>Bundesliga</option>
+                                                    <option>Ligue 1</option>
+                                                    <option>Champions League</option>
+                                                    <option>Europa League</option>
+                                                    <option>Copa Libertadores</option>
+                                                    <option>Mundial de Clubes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Día/Fecha</label>
+                                                <select class="form-select" id="otra-liga-dia">
+                                                    <option>Viernes</option>
+                                                    <option>Sábado</option>
+                                                    <option>Domingo</option>
+                                                    <option>Lunes</option>
+                                                    <option>Martes</option>
+                                                    <option>Miércoles</option>
+                                                    <option>Jueves</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Equipo Local</label>
+                                                <div class="d-flex align-items-center">
+                                                    <input type="text" class="form-control" id="otra-liga-local" placeholder="Manchester United">
+                                                    <div class="ms-2">
+                                                        <label for="otra-liga-logo-local" class="btn btn-sm btn-outline-primary">Logo</label>
+                                                        <input type="file" id="otra-liga-logo-local" class="d-none" accept="image/*">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 text-center">
+                                                    <img id="preview-otra-liga-local" src="" alt="" class="d-none" style="max-height: 40px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Equipo Visitante</label>
+                                                <div class="d-flex align-items-center">
+                                                    <input type="text" class="form-control" id="otra-liga-visitante" placeholder="Manchester City">
+                                                    <div class="ms-2">
+                                                        <label for="otra-liga-logo-visitante" class="btn btn-sm btn-outline-primary">Logo</label>
+                                                        <input type="file" id="otra-liga-logo-visitante" class="d-none" accept="image/*">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 text-center">
+                                                    <img id="preview-otra-liga-visitante" src="" alt="" class="d-none" style="max-height: 40px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Hora</label>
+                                                <input type="time" class="form-control" id="otra-liga-hora" value="14:00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="button" id="btn-vista-previa" class="btn btn-info">
+                                    <i class="bi bi-eye"></i> Vista Previa
+                                </button>
+                                <button type="button" id="btn-guardar-quiniela" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Guardar Quiniela
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Vista previa de la quiniela -->
+                    <div class="card mt-4 d-none" id="preview-quiniela">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Vista Previa de la Quiniela</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <h3 id="preview-title">Liga MX Jornada 16</h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="bg-light">Premios:</th>
+                                            </tr>
+                                            <tr>
+                                                <td width="20%">Primer Lugar:</td>
+                                                <td id="preview-primer-lugar">El premio acumulado ejemplo 50 personas x $10 Dlls = 500 (costo para participar $2 por eso se cobran $12)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Segundo Lugar:</td>
+                                                <td id="preview-segundo-lugar">Próxima Quiniela Gratis</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tercer Lugar:</td>
+                                                <td id="preview-tercer-lugar">Siguiente Quiniela Paga La Mitad ($6 Dlls)</td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="bg-light">Reglas:</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <ol id="preview-reglas">
+                                                        <li>Coloca los resultados en los recuadros, asegurándote de que los números sean claros. Si deseas modificar un resultado, tacha [x] el número y escríbelo de nuevo al lado. Sobreescribir un numero será inválido. Reporta cualquier inconveniente al administrador antes de comenzar.</li>
+                                                        <li>Por favor, asegúrate de enviar la quiniela antes de que comience el primer partido.</li>
+                                                        <li>Si no completas un resultado o este permanece vacío, no será considerado.</li>
+                                                        <li>Los resultados se publicarán al concluir el último partido del día.</li>
+                                                        <li>En caso de que haya un empate en el segundo y tercer lugar, el ganador será aquel que haya enviado la quiniela primero.</li>
+                                                    </ol>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <div class="border rounded p-3">
+                                        <h4>COSTO QUINIELA $12 DÓLARES</h4>
+                                        <img src="images/logo.png" alt="Logo QuinielaBadger" style="max-width: 150px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="preview-nombre" class="form-label">NOMBRE:</label>
+                                <input type="text" class="form-control" id="preview-nombre" placeholder="Ingrese su nombre">
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th width="30%">Local</th>
+                                            <th colspan="2">Resultado</th>
+                                            <th width="30%">Visitante</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="preview-partidos">
+                                        <tr>
+                                            <td>Viernes</td>
+                                            <td>7:00:00 PM</td>
+                                            <td class="text-center">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <img src="images/equipos/Querétaro.png" alt="Querétaro" style="width: 50px; height: auto;">
+                                                    <div class="mt-1">Querétaro</div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">_</td>
+                                            <td class="text-center">_</td>
+                                            <td class="text-center">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <img src="images/equipos/León.png" alt="León" style="width: 50px; height: auto;">
+                                                    <div class="mt-1">León</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="mt-4 text-center">
+                                <button id="btn-descargar-formato" class="btn btn-success btn-lg">
+                                    <i class="bi bi-download me-2"></i>Descargar Formato
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="registro-quinielas" class="section-content d-none">
+                    <h2 class="mb-4">Registro de Quinielas</h2>
+                    <div class="alert alert-info">
+                        <h4 class="alert-heading">Sección de Administrador</h4>
+                        <p>Aquí puedes ver y gestionar todas las quinielas existentes.</p>
+                    </div>
+                    <div id="tabla-quinielas-container" class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Quinielas Activas</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Fin</th>
+                                            <th>Participantes</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-quinielas-activas">
+                                        <!-- Aquí se agregarán las filas de las quinielas activas -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección de edición de quiniela -->
+                    <div id="seccion-editar-quiniela" class="d-none">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 id="titulo-quiniela-edicion">Editar Quiniela #<span id="numero-quiniela-edicion">1</span></h3>
+                            <button class="btn btn-secondary" onclick="volverListadoQuinielas()">
+                                <i class="bi bi-arrow-left"></i> Volver al listado
+                            </button>
+                        </div>
+                        
+                        <ul class="nav nav-tabs mb-3" id="quinielaEdicionTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-tab-pane" type="button" role="tab" aria-controls="info-tab-pane" aria-selected="true">
+                                    <i class="bi bi-info-circle"></i> Información
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="partidos-tab" data-bs-toggle="tab" data-bs-target="#partidos-tab-pane" type="button" role="tab" aria-controls="partidos-tab-pane" aria-selected="false">
+                                    <i class="bi bi-trophy"></i> Partidos
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="participantes-tab" data-bs-toggle="tab" data-bs-target="#participantes-tab-pane" type="button" role="tab" aria-controls="participantes-tab-pane" aria-selected="false">
+                                    <i class="bi bi-people"></i> Participantes
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="quinielaEdicionTabContent">
+                            <!-- Pestaña de información -->
+                            <div class="tab-pane fade show active" id="info-tab-pane" role="tabpanel" aria-labelledby="info-tab" tabindex="0">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0">Información General</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="form-editar-quiniela">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="nombre-quiniela-edicion" class="form-label">Nombre de la Quiniela</label>
+                                                        <input type="text" class="form-control" id="nombre-quiniela-edicion" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="fecha-inicio-edicion" class="form-label">Fecha de Inicio</label>
+                                                        <input type="date" class="form-control" id="fecha-inicio-edicion" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="fecha-fin-edicion" class="form-label">Fecha de Fin</label>
+                                                        <input type="date" class="form-control" id="fecha-fin-edicion" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="estado-quiniela-edicion" class="form-label">Estado</label>
+                                                        <select class="form-select" id="estado-quiniela-edicion">
+                                                            <option value="activa">Activa</option>
+                                                            <option value="pendiente">Pendiente</option>
+                                                            <option value="completada">Completada</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="costo-quiniela-edicion" class="form-label">Costo de Participación ($)</label>
+                                                        <input type="number" class="form-control" id="costo-quiniela-edicion" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="premio-primero-edicion" class="form-label">Premio Primer Lugar</label>
+                                                        <input type="text" class="form-control" id="premio-primero-edicion" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="premio-segundo-edicion" class="form-label">Premio Segundo Lugar</label>
+                                                        <input type="text" class="form-control" id="premio-segundo-edicion" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="premio-tercero-edicion" class="form-label">Premio Tercer Lugar</label>
+                                                        <input type="text" class="form-control" id="premio-tercero-edicion" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary" onclick="guardarCambiosQuiniela()">
+                                                <i class="bi bi-save"></i> Guardar Cambios
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pestaña de partidos -->
+                            <div class="tab-pane fade" id="partidos-tab-pane" role="tabpanel" aria-labelledby="partidos-tab" tabindex="0">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">Partidos de la Quiniela</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th width="10%">Fecha</th>
+                                                        <th width="10%">Hora</th>
+                                                        <th width="35%">Local</th>
+                                                        <th width="10%">Resultado</th>
+                                                        <th width="35%">Visitante</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="partidos-quiniela-edicion">
+                                                    <!-- Aquí se agregarán los partidos de la quiniela -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" onclick="guardarResultadosPartidos()">
+                                            <i class="bi bi-save"></i> Guardar Resultados
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pestaña de participantes -->
+                            <div class="tab-pane fade" id="participantes-tab-pane" role="tabpanel" aria-labelledby="participantes-tab" tabindex="0">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Participantes de la Quiniela</h5>
+                                        <button class="btn btn-light btn-sm" onclick="agregarParticipante()">
+                                            <i class="bi bi-person-plus"></i> Agregar Participante
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="sin-participantes" class="alert alert-warning">
+                                            <p>No hay participantes registrados en esta quiniela.</p>
+                                        </div>
+                                        <div id="tabla-participantes-container" class="table-responsive d-none">
+                                            <table class="table table-bordered">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th width="5%">#</th>
+                                                        <th width="20%">Nombre</th>
+                                                        <th width="65%">Pronósticos</th>
+                                                        <th width="10%">Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="participantes-quiniela-edicion">
+                                                    <!-- Aquí se agregarán los participantes de la quiniela -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal para agregar/editar participante -->
+                    <div class="modal fade" id="modalParticipante" tabindex="-1" aria-labelledby="modalParticipanteLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalParticipanteLabel">Agregar Participante</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="form-participante">
+                                        <input type="hidden" id="participante-index">
+                                        <div class="mb-3">
+                                            <label for="participante-nombre" class="form-label">Nombre del Participante</label>
+                                            <input type="text" class="form-control" id="participante-nombre" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Pronósticos para los Partidos</label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th>Partido</th>
+                                                            <th>Local</th>
+                                                            <th>Pronóstico Local</th>
+                                                            <th>Pronóstico Visitante</th>
+                                                            <th>Visitante</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="pronosticos-participante">
+                                                        <!-- Aquí se agregarán los partidos para pronosticar -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" onclick="guardarParticipante()">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- JavaScript Inline para evitar problemas de carga -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Script simplificado inline para evitar problemas de carga
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('QuinielaBadger inicializando (versión simplificada)...');
+            
+            // Datos simulados de usuarios
+            const usuariosRegistrados = [
+                { username: 'Carlos Ramírez', password: 'carlos123' },
+                { username: 'Ana González', password: 'ana123' },
+                { username: 'Roberto Méndez', password: 'roberto123' },
+                { username: 'Laura Torres', password: 'laura123' },
+                { username: 'Miguel Ángel Pérez', password: 'miguel123' },
+                { username: 'José García', password: 'jose123' },
+                { username: 'María Rodríguez', password: 'maria123' },
+                { username: 'Juan López', password: 'juan123' },
+                { username: 'AdminBadger', password: 'AdminBadger2025' }
+            ];
+            
+            // Estado de la aplicación
+            const state = {
+                currentSection: 'inicio',
+                isLoggedIn: false,
+                isAdmin: false,
+                currentUser: null
+            };
+            
+            // Referencias a elementos del DOM
+            const sections = document.querySelectorAll('.section-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sidebar = document.getElementById('sidebarMenu');
+            const mainContent = document.querySelector('main');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            // Referencias a elementos de autenticación
+            const adminOnlyItems = document.querySelectorAll('.admin-only');
+            const userLoggedItems = document.querySelectorAll('.user-logged');
+            const navRegistro = document.getElementById('nav-registro');
+            const navLogin = document.getElementById('nav-login');
+            const loginForm = document.getElementById('login-form');
+            const registroForm = document.getElementById('registro-form');
+            
+            // Referencias para la quiniela
+            const partidosContainer = document.getElementById('partidos-container');
+            const btnVistaPrevia = document.getElementById('btn-vista-previa');
+            const btnAddPartido = document.getElementById('btn-add-partido');
+            const btnRemovePartido = document.getElementById('btn-remove-partido');
+            const includeOtherLeague = document.getElementById('include-other-league');
+            const otherLeaguePartido = document.getElementById('other-league-partido');
+            const previewQuiniela = document.getElementById('preview-quiniela');
+            
+            // Verificar que los elementos del DOM se hayan encontrado
+            console.log('Verificación de elementos DOM:');
+            console.log('- loginForm:', loginForm ? 'OK' : 'NO ENCONTRADO');
+            console.log('- registroForm:', registroForm ? 'OK' : 'NO ENCONTRADO');
+            console.log('- partidosContainer:', partidosContainer ? 'OK' : 'NO ENCONTRADO');
+            console.log('- btnVistaPrevia:', btnVistaPrevia ? 'OK' : 'NO ENCONTRADO');
+            console.log('- adminOnlyItems:', adminOnlyItems.length);
+            console.log('- userLoggedItems:', userLoggedItems.length);
+            
+            // Función para cambiar entre secciones
+            function showSection(sectionId) {
+                console.log('Mostrando sección:', sectionId);
+                
+                // Ocultar todas las secciones
+                sections.forEach(section => {
+                    section.classList.add('d-none');
+                });
+                
+                // Mostrar la sección seleccionada
+                const activeSection = document.getElementById(sectionId);
+                if (activeSection) {
+                    activeSection.classList.remove('d-none');
+                    state.currentSection = sectionId;
+                    
+                    // Actualizar enlaces de navegación
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        const href = link.getAttribute('href');
+                        if (href === '#' + sectionId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }
+            
+            // Inicializar cambio de secciones
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                    
+                    // En móviles, mantener el sidebar visible
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.add('expanded');
+                    }
+                });
+            });
+            
+            // Enlaces internos para cambiar secciones
+            document.querySelectorAll('.change-section').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                });
+            });
+            
+            // Función para el sidebar
+            sidebarToggle.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    // En móviles, alternar la clase 'expanded'
+                    sidebar.classList.toggle('expanded');
+                } else {
+                    // En escritorio, alternar la clase 'collapsed'
+                    sidebar.classList.toggle('collapsed');
+                    mainContent.classList.toggle('sidebar-collapsed');
+                }
+            });
+            
+            // Función para actualizar logos de equipos cuando se selecciona un equipo
+            document.addEventListener('change', function(e) {
+                if (e.target && e.target.classList.contains('equipo-select')) {
+                    const equipoNombre = e.target.value;
+                    const logoUrl = `images/equipos/${equipoNombre}.png`;
+                    const logoImg = e.target.parentElement.querySelector('.equipo-logo');
+                    if (logoImg) {
+                        logoImg.src = logoUrl;
+                        logoImg.alt = equipoNombre;
+                    }
+                }
+            });
+            
+            // Cargar imagen preview para equipos de otra liga
+            document.getElementById('otra-liga-logo-local')?.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('preview-otra-liga-local');
+                        preview.src = e.target.result;
+                        preview.alt = document.getElementById('otra-liga-local').value;
+                        preview.classList.remove('d-none');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            document.getElementById('otra-liga-logo-visitante')?.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('preview-otra-liga-visitante');
+                        preview.src = e.target.result;
+                        preview.alt = document.getElementById('otra-liga-visitante').value;
+                        preview.classList.remove('d-none');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Inicializar los partidos
+            if(partidosContainer) {
+                // Inicializar con 9 partidos
+                for(let i = 1; i < 9; i++) {
+                    // Clonar la primera fila
+                    const primeraFila = partidosContainer.querySelector('tr');
+                    const nuevaFila = primeraFila.cloneNode(true);
+                    
+                    // Asignar equipos aleatorios para cada partido
+                    const equiposLocales = nuevaFila.querySelectorAll('.equipo-select');
+                    if (equiposLocales.length) {
+                        const randomIndex1 = Math.floor(Math.random() * equiposLocales[0].options.length);
+                        const randomIndex2 = Math.floor(Math.random() * equiposLocales[1].options.length);
+                        
+                        equiposLocales[0].selectedIndex = randomIndex1;
+                        equiposLocales[1].selectedIndex = randomIndex2;
+                        
+                        // Actualizar los logos según el equipo seleccionado
+                        const logoLocal = nuevaFila.querySelector('.equipo-logo');
+                        const logoVisitante = nuevaFila.querySelectorAll('.equipo-logo')[1];
+                        
+                        if (logoLocal) {
+                            const equipoLocalNombre = equiposLocales[0].value;
+                            logoLocal.src = `images/equipos/${equipoLocalNombre}.png`;
+                            logoLocal.alt = equipoLocalNombre;
+                        }
+                        
+                        if (logoVisitante) {
+                            const equipoVisitanteNombre = equiposLocales[1].value;
+                            logoVisitante.src = `images/equipos/${equipoVisitanteNombre}.png`;
+                            logoVisitante.alt = equipoVisitanteNombre;
+                        }
+                    }
+                    
+                    // Agregar la nueva fila
+                    partidosContainer.appendChild(nuevaFila);
+                }
+                
+                // Evento para mostrar/ocultar el partido de otra liga
+                if(includeOtherLeague) {
+                    includeOtherLeague.addEventListener('change', function() {
+                        if(this.checked) {
+                            otherLeaguePartido.classList.remove('d-none');
+                        } else {
+                            otherLeaguePartido.classList.add('d-none');
+                        }
+                    });
+                }
+                
+                // Función para agregar un nuevo partido
+                if(btnAddPartido) {
+                    btnAddPartido.addEventListener('click', function() {
+                        // Verificar si ya hay 9 partidos
+                        const partidosActuales = partidosContainer.querySelectorAll('tr').length;
+                        if(partidosActuales >= 9) {
+                            alert('Ya has agregado el máximo de 9 partidos de Liga MX. Si deseas agregar un partido de otra liga, marca la casilla correspondiente.');
+                            return;
+                        }
+                        
+                        // Clonar la primera fila
+                        const primeraFila = partidosContainer.querySelector('tr');
+                        const nuevaFila = primeraFila.cloneNode(true);
+                        
+                        // Limpiar los valores seleccionados
+                        nuevaFila.querySelectorAll('select').forEach(select => {
+                            const firstOption = select.querySelector('option');
+                            if(firstOption) {
+                                firstOption.selected = true;
+                            }
+                        });
+                        
+                        // Agregar la nueva fila
+                        partidosContainer.appendChild(nuevaFila);
+                    });
+                }
+                
+                // Función para eliminar el último partido
+                if(btnRemovePartido) {
+                    btnRemovePartido.addEventListener('click', function() {
+                        const partidos = partidosContainer.querySelectorAll('tr');
+                        if(partidos.length > 1) {
+                            partidosContainer.removeChild(partidos[partidos.length - 1]);
+                        } else {
+                            alert('Debe haber al menos un partido en la quiniela.');
+                        }
+                    });
+                }
+            }
+            
+            // Función para mostrar la vista previa
+            if(btnVistaPrevia) {
+                btnVistaPrevia.addEventListener('click', function() {
+                    // Obtener los datos de la quiniela
+                    const nombreQuiniela = document.getElementById('nombre-quiniela').value;
+                    const primerLugar = document.getElementById('premio-primero').value;
+                    const segundoLugar = document.getElementById('premio-segundo').value;
+                    const tercerLugar = document.getElementById('premio-tercero').value;
+                    
+                    // Actualizar la vista previa
+                    document.getElementById('preview-title').textContent = nombreQuiniela;
+                    document.getElementById('preview-primer-lugar').textContent = primerLugar;
+                    document.getElementById('preview-segundo-lugar').textContent = segundoLugar;
+                    document.getElementById('preview-tercer-lugar').textContent = tercerLugar;
+                    
+                    // Añadir el número de quiniela al título
+                    const numeroQuiniela = document.getElementById('numero-quiniela').value;
+                    document.getElementById('preview-title').textContent = `${nombreQuiniela} - Quiniela #${numeroQuiniela}`;
+                    
+                    // Generar la tabla de partidos en la vista previa
+                    const previewPartidos = document.getElementById('preview-partidos');
+                    previewPartidos.innerHTML = '';
+                    
+                    // Añadir los partidos de Liga MX
+                    const partidos = partidosContainer.querySelectorAll('tr');
+                    
+                    // Crear un array para ordenar los partidos
+                    let partidosArray = [];
+                    
+                    // Obtener los datos de cada partido
+                    partidos.forEach(partido => {
+                        const diaSelect = partido.querySelector('select:nth-of-type(1)');
+                        const dia = diaSelect ? diaSelect.value : 'Domingo';
+                        const horaInput = partido.querySelector('input[type="time"]');
+                        const hora = horaInput ? horaInput.value : '12:00';
+                        
+                        const equipoLocalSelect = partido.querySelector('.equipo-select[data-side="local"]');
+                        const equipoLocal = equipoLocalSelect ? equipoLocalSelect.value : 'Equipo Local';
+                        const logoLocal = `images/equipos/${equipoLocal}.png`;
+                        
+                        const equipoVisitanteSelect = partido.querySelector('.equipo-select[data-side="visitante"]');
+                        const equipoVisitante = equipoVisitanteSelect ? equipoVisitanteSelect.value : 'Equipo Visitante';
+                        const logoVisitante = `images/equipos/${equipoVisitante}.png`;
+                        
+                        // Agregar partido al array
+                        partidosArray.push({
+                            dia,
+                            hora,
+                            equipoLocal,
+                            logoLocal,
+                            equipoVisitante,
+                            logoVisitante,
+                            esOtraLiga: false
+                        });
+                    });
+                    
+                    // Añadir el partido de otra liga si está marcado
+                    if(includeOtherLeague.checked) {
+                        const liga = document.getElementById('otra-liga-select').value;
+                        const dia = document.getElementById('otra-liga-dia').value;
+                        const local = document.getElementById('otra-liga-local').value;
+                        const visitante = document.getElementById('otra-liga-visitante').value;
+                        const hora = document.getElementById('otra-liga-hora').value;
+                        
+                        const logoLocalImg = document.getElementById('preview-otra-liga-local');
+                        const logoVisitanteImg = document.getElementById('preview-otra-liga-visitante');
+                        
+                        const localLogoSrc = !logoLocalImg.classList.contains('d-none') ? logoLocalImg.src : '';
+                        const visitanteLogoSrc = !logoVisitanteImg.classList.contains('d-none') ? logoVisitanteImg.src : '';
+                        
+                        // Agregar partido de otra liga al array
+                        partidosArray.push({
+                            dia,
+                            hora,
+                            equipoLocal: `${local} (${liga})`,
+                            logoLocal: localLogoSrc,
+                            equipoVisitante: `${visitante} (${liga})`,
+                            logoVisitante: visitanteLogoSrc,
+                            esOtraLiga: true
+                        });
+                    }
+                    
+                    // Función para convertir días a valores numéricos para ordenar
+                    function diaANumero(dia) {
+                        const dias = {
+                            'Lunes': 1,
+                            'Martes': 2,
+                            'Miércoles': 3,
+                            'Jueves': 4,
+                            'Viernes': 5,
+                            'Sábado': 6,
+                            'Domingo': 7
+                        };
+                        return dias[dia] || 7; // Si no se encuentra, por defecto Domingo
+                    }
+                    
+                    // Ordenar por día y hora
+                    partidosArray.sort((a, b) => {
+                        // Primero ordenar por día
+                        const diaA = diaANumero(a.dia);
+                        const diaB = diaANumero(b.dia);
+                        
+                        if (diaA !== diaB) {
+                            return diaA - diaB;
+                        }
+                        
+                        // Si los días son iguales, ordenar por hora
+                        return a.hora.localeCompare(b.hora);
+                    });
+                    
+                    // Agregar partidos ordenados a la tabla
+                    partidosArray.forEach(partido => {
+                        const fila = document.createElement('tr');
+                        if (partido.esOtraLiga) {
+                            fila.classList.add('table-success');
+                        }
+                        
+                        // Para partidos de otra liga, manejar logos diferente
+                        let localLogoHtml, visitanteLogoHtml;
+                        
+                        if (partido.esOtraLiga) {
+                            localLogoHtml = partido.logoLocal ? 
+                                `<img src="${partido.logoLocal}" alt="${partido.equipoLocal}" style="width: 40px; height: auto;">` : '';
+                            
+                            visitanteLogoHtml = partido.logoVisitante ? 
+                                `<img src="${partido.logoVisitante}" alt="${partido.equipoVisitante}" style="width: 40px; height: auto;">` : '';
+                        } else {
+                            localLogoHtml = `<img src="${partido.logoLocal}" alt="${partido.equipoLocal}" style="width: 50px; height: auto;">`;
+                            visitanteLogoHtml = `<img src="${partido.logoVisitante}" alt="${partido.equipoVisitante}" style="width: 50px; height: auto;">`;
+                        }
+                        
+                        fila.innerHTML = `
+                            <td>${partido.dia}</td>
+                            <td>${formatTime(partido.hora)}</td>
+                            <td class="text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    ${localLogoHtml}
+                                    <div class="mt-1">${partido.equipoLocal}</div>
+                                </div>
+                            </td>
+                            <td class="text-center">_</td>
+                            <td class="text-center">_</td>
+                            <td class="text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    ${visitanteLogoHtml}
+                                    <div class="mt-1">${partido.equipoVisitante}</div>
+                                </div>
+                            </td>
+                        `;
+                        
+                        previewPartidos.appendChild(fila);
+                    });
+                    
+                    // Mostrar la vista previa
+                    previewQuiniela.classList.remove('d-none');
+                    
+                    // Desplazarse hasta la vista previa
+                    previewQuiniela.scrollIntoView({behavior: 'smooth'});
+                });
+            }
+            
+            // Función para descargar el formato de quiniela
+            document.getElementById('btn-descargar-formato')?.addEventListener('click', function() {
+                // Obtener el contenido de la vista previa
+                const previewElement = document.getElementById('preview-quiniela');
+                
+                // Crear un nuevo elemento que contendrá solo lo que queremos imprimir
+                const contenidoImprimir = document.createElement('div');
+                contenidoImprimir.innerHTML = previewElement.innerHTML;
+                
+                // Remover botones y elementos no necesarios para la impresión
+                const btnDescargar = contenidoImprimir.querySelector('#btn-descargar-formato');
+                if (btnDescargar) {
+                    btnDescargar.parentNode.removeChild(btnDescargar);
+                }
+                
+                // Obtener solo el contenido de la card-body
+                const cardBody = contenidoImprimir.querySelector('.card-body').cloneNode(true);
+                
+                // Abrir una nueva ventana para imprimir
+                const ventanaImpresion = window.open('', '_blank');
+                ventanaImpresion.document.write(`
+                    <html>
+                    <head>
+                        <title>Formato de Quiniela #${document.getElementById('numero-quiniela').value} - QuinielaBadger</title>
+                        <meta charset="utf-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                        <style>
+                            body { 
+                                padding: 0; 
+                                margin: 0;
+                                font-size: 7.5px; 
+                                font-family: Arial, sans-serif;
+                            }
+                            .container-fluid { 
+                                padding: 5px; 
+                                max-width: 100%;
+                            }
+                            .formato-quiniela {
+                                border: 1px solid #000;
+                                margin: 0 0 5px 0;
+                                page-break-inside: avoid;
+                            }
+                            h3 { 
+                                font-size: 9px; 
+                                font-weight: bold; 
+                                margin: 1px 0;
+                                padding-left: 2px;
+                            }
+                            h4 { 
+                                font-size: 8px; 
+                                font-weight: bold; 
+                                margin: 1px 0;
+                            }
+                            .premios-reglas {
+                                font-size: 6.5px;
+                                margin-bottom: 0;
+                            }
+                            .premios-reglas td {
+                                padding: 1px 2px;
+                            }
+                            .table { 
+                                margin-bottom: 0; 
+                                border-collapse: collapse;
+                            }
+                            .table th, .table td {
+                                padding: 1px;
+                                font-size: 6.5px;
+                                border: 1px solid #000;
+                                vertical-align: middle;
+                            }
+                            th {
+                                background-color: #333;
+                                color: white;
+                            }
+                            img {
+                                max-height: 18px !important;
+                                width: auto !important;
+                            }
+                            .logo-container {
+                                text-align: center;
+                                margin: 1px 0;
+                            }
+                            .logo-container img {
+                                max-height: 100px !important;
+                            }
+                            .form-control {
+                                height: 12px;
+                                padding: 1px 2px;
+                                font-size: 7px;
+                            }
+                            ol {
+                                padding-left: 10px;
+                                margin-bottom: 1px;
+                            }
+                            li {
+                                font-size: 6px;
+                                margin: 0;
+                                line-height: 1.1;
+                            }
+                            .mt-1 {
+                                margin-top: 0 !important;
+                            }
+                            .costo-quiniela {
+                                background-color: #f8f9fa;
+                                border: 1px solid #ddd;
+                                padding: 1px;
+                                text-align: center;
+                                margin: 1px 0;
+                            }
+                            .form-group {
+                                margin: 1px !important;
+                            }
+                            .print-container {
+                                width: 100%;
+                                page-break-inside: avoid;
+                            }
+                            @media print {
+                                .no-print { display: none !important; }
+                                .btn-print { display: none !important; }
+                                body { 
+                                    width: 100%; 
+                                    height: 100%;
+                                }
+                                .formato-quiniela {
+                                    border: 1px solid #000;
+                                }
+                                @page {
+                                    size: letter portrait;
+                                    margin: 0.5cm;
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container-fluid">
+                            <div class="text-end btn-print mb-2">
+                                <button onclick="window.print()" class="btn btn-primary btn-sm">Imprimir</button>
+                                <button onclick="window.close()" class="btn btn-secondary btn-sm ms-2">Cerrar</button>
+                            </div>
+                            
+                            <div class="print-container">
+                                <!-- Primera quiniela (arriba) -->
+                                <div class="formato-quiniela">
+                                    <div class="row g-0">
+                                        <div class="col-8">
+                                            <h3>${document.getElementById('preview-title').textContent}</h3>
+                                            <table class="table table-bordered premios-reglas">
+                                                <tr>
+                                                    <td colspan="2" style="background-color: #f0f0f0;"><strong>Premios:</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="20%">Primer Lugar:</td>
+                                                    <td>${document.getElementById('preview-primer-lugar').textContent}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Segundo Lugar:</td>
+                                                    <td>${document.getElementById('preview-segundo-lugar').textContent}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tercer Lugar:</td>
+                                                    <td>${document.getElementById('preview-tercer-lugar').textContent}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="background-color: #f0f0f0;"><strong>Reglas:</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ol id="reglas-print">
+                                                            ${document.querySelectorAll('#form-reglas-quiniela textarea').length > 0 ? 
+                                                              Array.from(document.querySelectorAll('#form-reglas-quiniela textarea')).map(
+                                                                (textarea, i) => `<li>${textarea.value}</li>`
+                                                              ).join('') : 
+                                                              `<li>Colocar los posibles resultados en los recuadros</li>
+                                                              <li>Subir la quiniela antes del primer partido</li>
+                                                              <li>Sin resultado no se toma en cuenta</li>
+                                                              <li>Resultados al finalizar último partido</li>
+                                                              <li>En empate gana quien subió primero</li>`
+                                                            }
+                                                        </ol>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="costo-quiniela h-100 d-flex flex-column justify-content-center">
+                                                <h4>COSTO $12</h4>
+                                                <div class="logo-container">
+                                                    <img src="images/logo.png" alt="Logo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="nombre-print1" class="form-label"><strong>NOMBRE:</strong></label>
+                                        <input type="text" class="form-control" id="nombre-print1">
+                                    </div>
+                                    
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th width="30%">Local</th>
+                                                <th colspan="2">Resultado</th>
+                                                <th width="30%">Visitante</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${document.getElementById('preview-partidos').innerHTML}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- Segunda quiniela (abajo) -->
+                                <div class="formato-quiniela">
+                                    <div class="row g-0">
+                                        <div class="col-8">
+                                            <h3>${document.getElementById('preview-title').textContent}</h3>
+                                            <table class="table table-bordered premios-reglas">
+                                                <tr>
+                                                    <td colspan="2" style="background-color: #f0f0f0;"><strong>Premios:</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="20%">Primer Lugar:</td>
+                                                    <td>${document.getElementById('preview-primer-lugar').textContent}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Segundo Lugar:</td>
+                                                    <td>${document.getElementById('preview-segundo-lugar').textContent}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tercer Lugar:</td>
+                                                    <td>${document.getElementById('preview-tercer-lugar').textContent}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="background-color: #f0f0f0;"><strong>Reglas:</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <ol id="reglas-print2">
+                                                            ${document.querySelectorAll('#form-reglas-quiniela textarea').length > 0 ? 
+                                                              Array.from(document.querySelectorAll('#form-reglas-quiniela textarea')).map(
+                                                                (textarea, i) => `<li>${textarea.value}</li>`
+                                                              ).join('') : 
+                                                              `<li>Colocar los posibles resultados en los recuadros</li>
+                                                              <li>Subir la quiniela antes del primer partido</li>
+                                                              <li>Sin resultado no se toma en cuenta</li>
+                                                              <li>Resultados al finalizar último partido</li>
+                                                              <li>En empate gana quien subió primero</li>`
+                                                            }
+                                                        </ol>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="costo-quiniela h-100 d-flex flex-column justify-content-center">
+                                                <h4>COSTO $12</h4>
+                                                <div class="logo-container">
+                                                    <img src="images/logo.png" alt="Logo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="nombre-print2" class="form-label"><strong>NOMBRE:</strong></label>
+                                        <input type="text" class="form-control" id="nombre-print2">
+                                    </div>
+                                    
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th width="30%">Local</th>
+                                                <th colspan="2">Resultado</th>
+                                                <th width="30%">Visitante</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${document.getElementById('preview-partidos').innerHTML}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                
+                ventanaImpresion.document.close();
+            });
+            
+            // Función auxiliar para formatear la hora
+            function formatTime(time) {
+                if(!time) return '';
+                
+                const [hours, minutes] = time.split(':');
+                const hour = parseInt(hours);
+                const ampm = hour >= 12 ? 'PM' : 'AM';
+                const formattedHour = hour % 12 || 12;
+                
+                return `${formattedHour}:${minutes}:00 ${ampm}`;
+            }
+            
+            // Función para manejar el inicio de sesión
+            function handleLogin(username, password) {
+                console.log('Intentando iniciar sesión con:', username);
+                
+                // Buscar el usuario
+                const usuario = usuariosRegistrados.find(user => user.username === username);
+                console.log('¿Usuario encontrado?', usuario ? 'Sí' : 'No');
+                
+                if (usuario && usuario.password === password) {
+                    console.log('Inicio de sesión exitoso');
+                    state.isLoggedIn = true;
+                    state.currentUser = username;
+                    
+                    // Verificar si es administrador
+                    if (username === 'AdminBadger') {
+                        state.isAdmin = true;
+                        console.log('Usuario es administrador');
+                        
+                        // Mostrar elementos de administrador
+                        adminOnlyItems.forEach(item => {
+                            item.classList.remove('d-none');
+                            console.log('Mostrando elemento de admin:', item.textContent.trim());
+                        });
+                        
+                        alert('¡Bienvenido Administrador!');
+                        
+                        // Mostrar sección de admin por defecto
+                        showSection('tesoreria');
+                    } else {
+                        state.isAdmin = false;
+                        alert('¡Bienvenido ' + username + '!');
+                        
+                        // Mantener en la sección actual o mostrar inicio
+                        if (state.currentSection === 'iniciar-sesion' || state.currentSection === 'registrarse') {
+                            showSection('inicio');
+                        }
+                    }
+                    
+                    // Actualizar interfaz
+                    navRegistro.classList.add('d-none');
+                    navLogin.classList.add('d-none');
+                    userLoggedItems.forEach(item => {
+                        item.classList.remove('d-none');
+                        console.log('Mostrando elemento de usuario:', item.textContent.trim());
+                    });
+                    
+                    return true;
+                } else {
+                    console.log('Error de inicio de sesión');
+                    alert('Usuario o contraseña incorrectos');
+                    return false;
+                }
+            }
+            
+            // Configurar el formulario de login
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Formulario de login enviado');
+                    
+                    const username = document.getElementById('login-usuario').value;
+                    const password = document.getElementById('login-password').value;
+                    
+                    handleLogin(username, password);
+                });
+            } else {
+                console.error('No se encontró el formulario de login');
+            }
+            
+            // Configurar el formulario de registro
+            if (registroForm) {
+                registroForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Formulario de registro enviado');
+                    
+                    const nombre = document.getElementById('nombre').value;
+                    const usuario = document.getElementById('usuario').value;
+                    const correo = document.getElementById('correo').value;
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+                    
+                    console.log('Datos de registro:', { nombre, usuario, correo });
+                    
+                    // Validar contraseñas
+                    if (password !== confirmPassword) {
+                        console.log('Error: Las contraseñas no coinciden');
+                        alert('Las contraseñas no coinciden');
+                        return;
+                    }
+                    
+                    // Verificar usuario existente
+                    const usuarioExistente = usuariosRegistrados.some(user => user.username === usuario);
+                    console.log('¿Usuario ya existe?', usuarioExistente ? 'Sí' : 'No');
+                    
+                    if (usuarioExistente) {
+                        alert('Este nombre de usuario ya está registrado. Por favor, elija otro.');
+                        return;
+                    }
+                    
+                    // Añadir usuario
+                    usuariosRegistrados.push({
+                        username: usuario,
+                        password: password,
+                        nombre: nombre,
+                        correo: correo
+                    });
+                    
+                    console.log('Usuario registrado correctamente. Total de usuarios:', usuariosRegistrados.length);
+                    console.log('Usuarios registrados:', usuariosRegistrados.map(u => u.username).join(', '));
+                    
+                    alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                    
+                    // Limpiar formulario
+                    registroForm.reset();
+                    
+                    // Redirigir a inicio de sesión
+                    showSection('iniciar-sesion');
+                });
+            } else {
+                console.error('No se encontró el formulario de registro');
+            }
+            
+            // Función para manejar cierre de sesión
+            window.handleLogout = function() {
+                console.log('Cerrando sesión...');
+                
+                state.isLoggedIn = false;
+                state.isAdmin = false;
+                state.currentUser = null;
+                
+                // Actualizar interfaz
+                console.log('Ocultando elementos de administrador:', adminOnlyItems.length);
+                adminOnlyItems.forEach(item => {
+                    item.classList.add('d-none');
+                });
+                
+                console.log('Ocultando elementos de usuario logueado:', userLoggedItems.length);
+                userLoggedItems.forEach(item => {
+                    item.classList.add('d-none');
+                });
+                
+                console.log('Mostrando elementos de navegación para usuarios no logueados');
+                navRegistro.classList.remove('d-none');
+                navLogin.classList.remove('d-none');
+                
+                showSection('inicio');
+                alert('Has cerrado sesión correctamente');
+            }
+            
+            // Botón de cerrar sesión
+            const btnLogout = document.getElementById('btn-logout');
+            console.log('Botón de logout:', btnLogout ? 'OK' : 'NO ENCONTRADO');
+            
+            if(btnLogout) {
+                btnLogout.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Click en botón de logout');
+                    window.handleLogout();
+                });
+            } else {
+                console.error('No se encontró el botón de logout');
+            }
+            
+            // Mostrar la sección inicial
+            showSection('inicio');
+            
+            console.log('QuinielaBadger inicializado correctamente');
+        });
+    </script>
+    
+    <!-- Script para manejar numeración consecutiva de quinielas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener el último número de quiniela del localStorage o usar 1 como valor predeterminado
+            const ultimoNumeroQuiniela = parseInt(localStorage.getItem('ultimoNumeroQuiniela') || '0');
+            const campoNumeroQuiniela = document.getElementById('numero-quiniela');
+            
+            // Configurar el valor inicial (incrementando el último número)
+            if (campoNumeroQuiniela) {
+                campoNumeroQuiniela.value = ultimoNumeroQuiniela + 1;
+                
+                // Cuando se envía el formulario, guardar el número actual como último número
+                const formDatosQuiniela = document.getElementById('form-datos-quiniela');
+                if (formDatosQuiniela) {
+                    formDatosQuiniela.addEventListener('submit', function(e) {
+                        // Guardar el número actual como último número
+                        localStorage.setItem('ultimoNumeroQuiniela', campoNumeroQuiniela.value);
+                        console.log('Quiniela guardada con número:', campoNumeroQuiniela.value);
+                    });
+                }
+                
+                // NO ASIGNAR EVENTO AQUÍ - Se maneja en el otro script para evitar duplicados
+            }
+        });
+    </script>
+    
+    <!-- Script para manejar el guardado de quiniela sin cerrar sesión -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnGuardarQuiniela = document.getElementById('btn-guardar-quiniela');
+            
+            // Función para guardar la quiniela en localStorage
+            function guardarQuinielaEnStorage(quiniela) {
+                // Obtener array de quinielas o crear uno nuevo
+                let quinielas = JSON.parse(localStorage.getItem('quinielas') || '[]');
+                
+                // Verificar si ya existe una quiniela con el mismo número
+                const indiceExistente = quinielas.findIndex(q => q.numero === quiniela.numero);
+                if (indiceExistente >= 0) {
+                    // Actualizar quiniela existente
+                    quinielas[indiceExistente] = quiniela;
+                } else {
+                    // Agregar nueva quiniela
+                    quinielas.push(quiniela);
+                }
+                
+                // Guardar en localStorage
+                localStorage.setItem('quinielas', JSON.stringify(quinielas));
+                
+                // Actualizar la tabla si estamos en la sección de registro
+                actualizarTablaQuinielas();
+            }
+            
+            if (btnGuardarQuiniela) {
+                btnGuardarQuiniela.addEventListener('click', function(e) {
+                    // Prevenir comportamiento predeterminado
+                    e.preventDefault();
+                    
+                    // Obtener datos del formulario
+                    const nombreQuiniela = document.getElementById('nombre-quiniela').value;
+                    const numeroQuiniela = document.getElementById('numero-quiniela').value;
+                    const fechaInicio = document.getElementById('fecha-inicio').value;
+                    const fechaFin = document.getElementById('fecha-fin').value;
+                    const costoQuiniela = document.getElementById('costo-quiniela').value;
+                    const primerLugar = document.getElementById('premio-primero').value;
+                    const segundoLugar = document.getElementById('premio-segundo').value;
+                    const tercerLugar = document.getElementById('premio-tercero').value;
+                    
+                    // Validaciones básicas
+                    if (!nombreQuiniela || !fechaInicio || !fechaFin) {
+                        alert('Por favor complete todos los campos obligatorios');
+                        return;
+                    }
+                    
+                    // Capturar partidos
+                    const partidos = [];
+                    const filas = document.querySelectorAll('#partidos-container tr');
+                    filas.forEach(fila => {
+                        const dia = fila.querySelector('select:nth-of-type(1)').value;
+                        const hora = fila.querySelector('input[type="time"]').value;
+                        const equipoLocalSelect = fila.querySelector('.equipo-select[data-side="local"]');
+                        const equipoLocal = equipoLocalSelect.value;
+                        const equipoVisitanteSelect = fila.querySelector('.equipo-select[data-side="visitante"]');
+                        const equipoVisitante = equipoVisitanteSelect.value;
+                        
+                        partidos.push({
+                            dia,
+                            hora,
+                            equipoLocal,
+                            equipoVisitante,
+                            logoLocal: `images/equipos/${equipoLocal}.png`,
+                            logoVisitante: `images/equipos/${equipoVisitante}.png`,
+                            esOtraLiga: false
+                        });
+                    });
+                    
+                    // Agregar partido de otra liga si está marcado
+                    const includeOtherLeague = document.getElementById('include-other-league');
+                    if (includeOtherLeague.checked) {
+                        const liga = document.getElementById('otra-liga-select').value;
+                        const dia = document.getElementById('otra-liga-dia').value;
+                        const local = document.getElementById('otra-liga-local').value;
+                        const visitante = document.getElementById('otra-liga-visitante').value;
+                        const hora = document.getElementById('otra-liga-hora').value;
+                        
+                        partidos.push({
+                            dia,
+                            hora,
+                            equipoLocal: `${local} (${liga})`,
+                            equipoVisitante: `${visitante} (${liga})`,
+                            esOtraLiga: true
+                        });
+                    }
+                    
+                    // Capturar reglas
+                    const reglas = [];
+                    document.querySelectorAll('#form-reglas-quiniela textarea').forEach(textarea => {
+                        reglas.push(textarea.value);
+                    });
+                    
+                    // Crear objeto quiniela
+                    const quiniela = {
+                        numero: numeroQuiniela,
+                        nombre: nombreQuiniela,
+                        fechaInicio,
+                        fechaFin,
+                        costo: costoQuiniela,
+                        premios: {
+                            primero: primerLugar,
+                            segundo: segundoLugar,
+                            tercero: tercerLugar
+                        },
+                        reglas,
+                        partidos,
+                        participantes: [],
+                        estado: 'activa',
+                        fechaCreacion: new Date().toISOString()
+                    };
+                    
+                    // Guardar en localStorage
+                    guardarQuinielaEnStorage(quiniela);
+                    
+                    // Guardar el último número de quiniela usado
+                    localStorage.setItem('ultimoNumeroQuiniela', numeroQuiniela);
+                    
+                    // Mostrar mensaje de éxito
+                    alert(`Quiniela #${numeroQuiniela} "${nombreQuiniela}" guardada correctamente`);
+                    
+                    // Preparar para la próxima quiniela
+                    document.getElementById('numero-quiniela').value = parseInt(numeroQuiniela) + 1;
+                    
+                    // Navegar a la sección de registro de quinielas
+                    setTimeout(() => {
+                        // Ocultar todas las secciones
+                        document.querySelectorAll('.section-content').forEach(s => {
+                            s.classList.add('d-none');
+                        });
+                        
+                        // Mostrar sección de registro
+                        const seccionRegistro = document.getElementById('registro-quinielas');
+                        if (seccionRegistro) {
+                            seccionRegistro.classList.remove('d-none');
+                            // Actualizar URL
+                            window.location.hash = 'registro-quinielas';
+                            // Actualizar enlaces activos
+                            document.querySelectorAll('.nav-link').forEach(link => {
+                                link.classList.remove('active');
+                                if (link.getAttribute('href') === '#registro-quinielas') {
+                                    link.classList.add('active');
+                                }
+                            });
+                            
+                            // Forzar actualización de la tabla
+                            actualizarTablaQuinielas();
+                        }
+                    }, 500); // Pequeño retraso para que aparezca primero el mensaje de éxito
+                });
+            }
+            
+            // Función para actualizar la tabla de quinielas
+            function actualizarTablaQuinielas() {
+                const tablaBody = document.querySelector('#tabla-quinielas-activas');
+                if (!tablaBody) {
+                    console.error('No se encontró la tabla de quinielas activas');
+                    return;
+                }
+                
+                // Limpiar tabla
+                tablaBody.innerHTML = '';
+                
+                // Obtener quinielas de localStorage
+                const quinielas = JSON.parse(localStorage.getItem('quinielas') || '[]');
+                
+                // Ordenar por número (más reciente primero)
+                quinielas.sort((a, b) => b.numero - a.numero);
+                
+                // Agregar filas a la tabla
+                quinielas.forEach(quiniela => {
+                    const fila = document.createElement('tr');
+                    
+                    // Formatear fechas
+                    const fechaInicio = new Date(quiniela.fechaInicio).toLocaleDateString();
+                    const fechaFin = new Date(quiniela.fechaFin).toLocaleDateString();
+                    
+                    // Asignar clase según estado
+                    if (quiniela.estado === 'activa') {
+                        fila.classList.add('table-success');
+                    } else if (quiniela.estado === 'pendiente') {
+                        fila.classList.add('table-warning');
+                    } else if (quiniela.estado === 'completada') {
+                        fila.classList.add('table-secondary');
+                    }
+                    
+                    fila.innerHTML = `
+                        <td>${quiniela.numero}</td>
+                        <td>${quiniela.nombre}</td>
+                        <td>${fechaInicio}</td>
+                        <td>${fechaFin}</td>
+                        <td>${quiniela.participantes.length}</td>
+                        <td><span class="badge bg-${quiniela.estado === 'activa' ? 'success' : quiniela.estado === 'pendiente' ? 'warning' : 'secondary'}">${quiniela.estado.charAt(0).toUpperCase() + quiniela.estado.slice(1)}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-info" onclick="verQuiniela(${quiniela.numero})">Ver/Editar</button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarQuiniela(${quiniela.numero})">Eliminar</button>
+                        </td>
+                    `;
+                    
+                    tablaBody.appendChild(fila);
+                });
+                
+                // Si no hay quinielas, mostrar mensaje
+                if (quinielas.length === 0) {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td colspan="7" class="text-center">No hay quinielas registradas. Crea una nueva quiniela para comenzar.</td>
+                    `;
+                    tablaBody.appendChild(fila);
+                }
+            }
+            
+            // Ejecutar al cargar la página
+            actualizarTablaQuinielas();
+            
+            // Exponer funciones globalmente
+            window.actualizarTablaQuinielas = actualizarTablaQuinielas;
+            window.eliminarQuiniela = function(numeroQuiniela) {
+                if (confirm(`¿Estás seguro de eliminar la quiniela #${numeroQuiniela}?`)) {
+                    // Obtener quinielas de localStorage
+                    let quinielas = JSON.parse(localStorage.getItem('quinielas') || '[]');
+                    
+                    // Filtrar la quiniela a eliminar
+                    quinielas = quinielas.filter(q => q.numero != numeroQuiniela);
+                    
+                    // Guardar en localStorage
+                    localStorage.setItem('quinielas', JSON.stringify(quinielas));
+                    
+                    // Actualizar tabla
+                    actualizarTablaQuinielas();
+                    
+                    alert(`Quiniela #${numeroQuiniela} eliminada correctamente`);
+                }
+            };
+            
+            window.verQuiniela = function(numeroQuiniela) {
+                // Obtener quinielas de localStorage
+                const quinielas = JSON.parse(localStorage.getItem('quinielas') || '[]');
+                
+                // Encontrar la quiniela
+                const quiniela = quinielas.find(q => q.numero == numeroQuiniela);
+                
+                if (quiniela) {
+                    // Guardar quiniela seleccionada
+                    localStorage.setItem('quinielaSeleccionada', JSON.stringify(quiniela));
+                    
+                    // Mostrar sección de edición
+                    document.getElementById('seccion-editar-quiniela').classList.remove('d-none');
+                    document.getElementById('tabla-quinielas-container').classList.add('d-none');
+                    
+                    // Llenar datos
+                    cargarDatosQuinielaSeleccionada();
+                }
+            };
+        });
+    </script>
+    
+    <!-- Script para manejar la edición de quinielas y registro de participantes -->
+    <script>
+        // Función para volver al listado de quinielas
+        function volverListadoQuinielas() {
+            document.getElementById('seccion-editar-quiniela').classList.add('d-none');
+            document.getElementById('tabla-quinielas-container').classList.remove('d-none');
+            actualizarTablaQuinielas();
+        }
+        
+        // Función para cargar los datos de la quiniela seleccionada
+        function cargarDatosQuinielaSeleccionada() {
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            if (!quiniela) return;
+            
+            // Actualizar título
+            document.getElementById('titulo-quiniela-edicion').innerHTML = `Editar Quiniela #<span id="numero-quiniela-edicion">${quiniela.numero}</span>`;
+            document.getElementById('numero-quiniela-edicion').textContent = quiniela.numero;
+            
+            // Cargar datos básicos
+            document.getElementById('nombre-quiniela-edicion').value = quiniela.nombre;
+            document.getElementById('fecha-inicio-edicion').value = quiniela.fechaInicio;
+            document.getElementById('fecha-fin-edicion').value = quiniela.fechaFin;
+            document.getElementById('costo-quiniela-edicion').value = quiniela.costo;
+            document.getElementById('premio-primero-edicion').value = quiniela.premios.primero;
+            document.getElementById('premio-segundo-edicion').value = quiniela.premios.segundo;
+            document.getElementById('premio-tercero-edicion').value = quiniela.premios.tercero;
+            document.getElementById('estado-quiniela-edicion').value = quiniela.estado;
+            
+            // Cargar partidos
+            cargarPartidosQuiniela(quiniela);
+            
+            // Cargar participantes
+            cargarParticipantesQuiniela(quiniela);
+        }
+        
+        // Función para cargar los partidos de la quiniela
+        function cargarPartidosQuiniela(quiniela) {
+            const partidosContainer = document.getElementById('partidos-quiniela-edicion');
+            partidosContainer.innerHTML = '';
+            
+            quiniela.partidos.forEach((partido, index) => {
+                const fila = document.createElement('tr');
+                
+                // Si el partido es de otra liga, asignar clase
+                if (partido.esOtraLiga) {
+                    fila.classList.add('table-info');
+                }
+                
+                // Generar contenido con resultados si existen
+                const resultadoLocal = partido.resultadoLocal !== undefined ? partido.resultadoLocal : '';
+                const resultadoVisitante = partido.resultadoVisitante !== undefined ? partido.resultadoVisitante : '';
+                
+                fila.innerHTML = `
+                    <td>${partido.dia}</td>
+                    <td>${partido.hora || '--:--'}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${partido.logoLocal || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="${partido.equipoLocal}" class="me-2" style="width: 30px; height: auto;">
+                            <span>${partido.equipoLocal}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <input type="number" class="form-control form-control-sm resultado-local me-1" 
+                                data-index="${index}" value="${resultadoLocal}" min="0" style="width: 45px; text-align: center;">
+                            <span class="align-self-center">-</span>
+                            <input type="number" class="form-control form-control-sm resultado-visitante ms-1" 
+                                data-index="${index}" value="${resultadoVisitante}" min="0" style="width: 45px; text-align: center;">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${partido.logoVisitante || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="${partido.equipoVisitante}" class="me-2" style="width: 30px; height: auto;">
+                            <span>${partido.equipoVisitante}</span>
+                        </div>
+                    </td>
+                `;
+                
+                partidosContainer.appendChild(fila);
+            });
+        }
+        
+        // Función para cargar los participantes de la quiniela
+        function cargarParticipantesQuiniela(quiniela) {
+            const participantesContainer = document.getElementById('participantes-quiniela-edicion');
+            participantesContainer.innerHTML = '';
+            
+            // Mostrar mensaje si no hay participantes
+            if (!quiniela.participantes || quiniela.participantes.length === 0) {
+                document.getElementById('sin-participantes').classList.remove('d-none');
+                document.getElementById('tabla-participantes-container').classList.add('d-none');
+                return;
+            }
+            
+            // Ocultar mensaje y mostrar tabla
+            document.getElementById('sin-participantes').classList.add('d-none');
+            document.getElementById('tabla-participantes-container').classList.remove('d-none');
+            
+            // Generar filas para cada participante
+            quiniela.participantes.forEach((participante, index) => {
+                const fila = document.createElement('tr');
+                
+                // Generar resumen de pronósticos
+                let pronosticosHTML = '<div class="pronósticos-container">';
+                participante.pronosticos.forEach((pronostico, i) => {
+                    const partido = quiniela.partidos[i];
+                    pronosticosHTML += `
+                        <div class="pronostico-item d-inline-block me-3 mb-2">
+                            <span title="${partido.equipoLocal}">${partido.equipoLocal.substring(0, 3).toUpperCase()}</span>
+                            <span class="badge bg-light text-dark">${pronostico.local}-${pronostico.visitante}</span>
+                            <span title="${partido.equipoVisitante}">${partido.equipoVisitante.substring(0, 3).toUpperCase()}</span>
+                        </div>
+                    `;
+                });
+                pronosticosHTML += '</div>';
+                
+                fila.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${participante.nombre}</td>
+                    <td>${pronosticosHTML}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning mb-1 w-100" onclick="editarParticipante(${index})">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger w-100" onclick="eliminarParticipante(${index})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                participantesContainer.appendChild(fila);
+            });
+        }
+        
+        // Función para guardar los cambios de la quiniela
+        function guardarCambiosQuiniela() {
+            // Obtener la quiniela actual
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            if (!quiniela) return;
+            
+            // Actualizar datos básicos
+            quiniela.nombre = document.getElementById('nombre-quiniela-edicion').value;
+            quiniela.fechaInicio = document.getElementById('fecha-inicio-edicion').value;
+            quiniela.fechaFin = document.getElementById('fecha-fin-edicion').value;
+            quiniela.costo = document.getElementById('costo-quiniela-edicion').value;
+            quiniela.premios.primero = document.getElementById('premio-primero-edicion').value;
+            quiniela.premios.segundo = document.getElementById('premio-segundo-edicion').value;
+            quiniela.premios.tercero = document.getElementById('premio-tercero-edicion').value;
+            quiniela.estado = document.getElementById('estado-quiniela-edicion').value;
+            
+            // Guardar quiniela actualizada
+            guardarQuinielaEnStorage(quiniela);
+            
+            // Actualizar la quiniela seleccionada
+            localStorage.setItem('quinielaSeleccionada', JSON.stringify(quiniela));
+            
+            alert('Cambios guardados correctamente');
+        }
+        
+        // Función para guardar los resultados de los partidos
+        function guardarResultadosPartidos() {
+            // Obtener la quiniela actual
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            if (!quiniela) return;
+            
+            // Actualizar resultados
+            const resultadosLocales = document.querySelectorAll('.resultado-local');
+            const resultadosVisitantes = document.querySelectorAll('.resultado-visitante');
+            
+            resultadosLocales.forEach(input => {
+                const index = input.dataset.index;
+                const valor = input.value.trim() === '' ? undefined : parseInt(input.value);
+                quiniela.partidos[index].resultadoLocal = valor;
+            });
+            
+            resultadosVisitantes.forEach(input => {
+                const index = input.dataset.index;
+                const valor = input.value.trim() === '' ? undefined : parseInt(input.value);
+                quiniela.partidos[index].resultadoVisitante = valor;
+            });
+            
+            // Guardar quiniela actualizada
+            guardarQuinielaEnStorage(quiniela);
+            
+            // Actualizar la quiniela seleccionada
+            localStorage.setItem('quinielaSeleccionada', JSON.stringify(quiniela));
+            
+            alert('Resultados guardados correctamente');
+            
+            // Actualizar vista
+            cargarPartidosQuiniela(quiniela);
+        }
+        
+        // Función para agregar un nuevo participante
+        function agregarParticipante() {
+            // Limpiar formulario
+            document.getElementById('participante-index').value = '';
+            document.getElementById('participante-nombre').value = '';
+            
+            // Cambiar título del modal
+            document.getElementById('modalParticipanteLabel').textContent = 'Agregar Participante';
+            
+            // Cargar partidos para pronósticos
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            cargarPartidosParaPronosticos(quiniela);
+            
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('modalParticipante'));
+            modal.show();
+        }
+        
+        // Función para editar un participante existente
+        function editarParticipante(index) {
+            // Obtener la quiniela actual
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            if (!quiniela || !quiniela.participantes || !quiniela.participantes[index]) return;
+            
+            const participante = quiniela.participantes[index];
+            
+            // Llenar formulario
+            document.getElementById('participante-index').value = index;
+            document.getElementById('participante-nombre').value = participante.nombre;
+            
+            // Cambiar título del modal
+            document.getElementById('modalParticipanteLabel').textContent = 'Editar Participante';
+            
+            // Cargar partidos para pronósticos
+            cargarPartidosParaPronosticos(quiniela, participante.pronosticos);
+            
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('modalParticipante'));
+            modal.show();
+        }
+        
+        // Función para eliminar un participante
+        function eliminarParticipante(index) {
+            if (!confirm('¿Estás seguro de eliminar este participante?')) return;
+            
+            // Obtener la quiniela actual
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            if (!quiniela || !quiniela.participantes) return;
+            
+            // Eliminar el participante
+            quiniela.participantes.splice(index, 1);
+            
+            // Guardar quiniela actualizada
+            guardarQuinielaEnStorage(quiniela);
+            
+            // Actualizar la quiniela seleccionada
+            localStorage.setItem('quinielaSeleccionada', JSON.stringify(quiniela));
+            
+            // Actualizar vista
+            cargarParticipantesQuiniela(quiniela);
+            
+            alert('Participante eliminado correctamente');
+        }
+        
+        // Función para cargar los partidos para pronósticos
+        function cargarPartidosParaPronosticos(quiniela, pronosticosExistentes = null) {
+            const pronosticosContainer = document.getElementById('pronosticos-participante');
+            pronosticosContainer.innerHTML = '';
+            
+            quiniela.partidos.forEach((partido, index) => {
+                const fila = document.createElement('tr');
+                
+                // Si el partido es de otra liga, asignar clase
+                if (partido.esOtraLiga) {
+                    fila.classList.add('table-info');
+                }
+                
+                // Obtener pronóstico si existe
+                let pronosticoLocal = '';
+                let pronosticoVisitante = '';
+                
+                if (pronosticosExistentes && pronosticosExistentes[index]) {
+                    pronosticoLocal = pronosticosExistentes[index].local;
+                    pronosticoVisitante = pronosticosExistentes[index].visitante;
+                }
+                
+                fila.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${partido.logoLocal || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="${partido.equipoLocal}" class="me-2" style="width: 30px; height: auto;">
+                            <span>${partido.equipoLocal}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control form-control-sm pronostico-local" 
+                            data-index="${index}" value="${pronosticoLocal}" min="0" style="width: 60px; text-align: center;">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control form-control-sm pronostico-visitante" 
+                            data-index="${index}" value="${pronosticoVisitante}" min="0" style="width: 60px; text-align: center;">
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${partido.logoVisitante || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="${partido.equipoVisitante}" class="me-2" style="width: 30px; height: auto;">
+                            <span>${partido.equipoVisitante}</span>
+                        </div>
+                    </td>
+                `;
+                
+                pronosticosContainer.appendChild(fila);
+            });
+        }
+        
+        // Función para guardar un participante
+        function guardarParticipante() {
+            // Obtener la quiniela actual
+            const quiniela = JSON.parse(localStorage.getItem('quinielaSeleccionada'));
+            if (!quiniela) return;
+            
+            // Obtener datos del formulario
+            const indexStr = document.getElementById('participante-index').value;
+            const nombre = document.getElementById('participante-nombre').value;
+            
+            if (!nombre) {
+                alert('Debe ingresar el nombre del participante');
+                return;
+            }
+            
+            // Obtener pronósticos
+            const pronosticos = [];
+            quiniela.partidos.forEach((partido, index) => {
+                const local = document.querySelector(`.pronostico-local[data-index="${index}"]`).value;
+                const visitante = document.querySelector(`.pronostico-visitante[data-index="${index}"]`).value;
+                
+                pronosticos.push({
+                    local: local === '' ? 0 : parseInt(local),
+                    visitante: visitante === '' ? 0 : parseInt(visitante)
+                });
+            });
+            
+            // Crear objeto participante
+            const participante = {
+                nombre,
+                pronosticos,
+                fechaRegistro: new Date().toISOString()
+            };
+            
+            // Verificar si es edición o creación
+            if (indexStr === '') {
+                // Es nuevo, agregar al array
+                if (!quiniela.participantes) {
+                    quiniela.participantes = [];
+                }
+                quiniela.participantes.push(participante);
+            } else {
+                // Es edición, actualizar
+                const index = parseInt(indexStr);
+                quiniela.participantes[index] = participante;
+            }
+            
+            // Guardar quiniela actualizada
+            guardarQuinielaEnStorage(quiniela);
+            
+            // Actualizar la quiniela seleccionada
+            localStorage.setItem('quinielaSeleccionada', JSON.stringify(quiniela));
+            
+            // Actualizar vista
+            cargarParticipantesQuiniela(quiniela);
+            
+            // Cerrar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalParticipante'));
+            modal.hide();
+            
+            alert('Participante guardado correctamente');
+        }
+        
+        // Función auxiliar para guardar quiniela en localStorage
+        function guardarQuinielaEnStorage(quiniela) {
+            // Obtener array de quinielas o crear uno nuevo
+            let quinielas = JSON.parse(localStorage.getItem('quinielas') || '[]');
+            
+            // Verificar si ya existe una quiniela con el mismo número
+            const indiceExistente = quinielas.findIndex(q => q.numero === quiniela.numero);
+            if (indiceExistente >= 0) {
+                // Actualizar quiniela existente
+                quinielas[indiceExistente] = quiniela;
+            } else {
+                // Agregar nueva quiniela
+                quinielas.push(quiniela);
+            }
+            
+            // Guardar en localStorage
+            localStorage.setItem('quinielas', JSON.stringify(quinielas));
+            
+            // Actualizar la tabla si estamos en la sección de registro
+            if (typeof actualizarTablaQuinielas === 'function') {
+                actualizarTablaQuinielas();
+            }
+        }
+    </script>
+</body>
+</html> 
