@@ -233,15 +233,15 @@
                                     <span>Crear Quiniela</span>
                                 </a>
                             </li>
-                            <li class="nav-item admin-only d-none">
+                            <li class="nav-item user-logged d-none">
                                 <a class="nav-link text-white" href="#registro-quinielas">
                                     <i class="bi bi-pencil-square"></i>
                                     <span>Registro de Quinielas</span>
                                 </a>
                             </li>
-                            <!-- Botón de cerrar sesión (solo visible al iniciar sesión) -->
+                            <!-- Cerrar sesión (visible solo cuando se ha iniciado sesión) -->
                             <li class="nav-item user-logged d-none">
-                                <a class="nav-link text-white" href="#" id="btn-logout">
+                                <a class="nav-link text-white" href="#" id="logout-btn">
                                     <i class="bi bi-box-arrow-right"></i>
                                     <span>Cerrar Sesión</span>
                                 </a>
@@ -255,7 +255,7 @@
             <main class="col px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <div class="alert alert-success mb-0 w-100">
-                        <strong>Versión simplificada</strong> - Esta versión está optimizada para resolver problemas de carga e interactividad.
+                        <strong>Versión 1.0.1</strong> - Esta versión está optimizada para resolver problemas de carga e interactividad.
                     </div>
                 </div>
 
@@ -321,7 +321,7 @@
 
                 <!-- Sección Últimos Ganadores -->
                 <section id="ultimos-ganadores" class="section-content d-none">
-                    <h2 class="mb-4">Últimos Ganadores</h2>
+                    <h2 class="mb-4">Tabla de Posiciones</h2>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <thead class="table-dark">
@@ -871,9 +871,13 @@
 
                 <section id="registro-quinielas" class="section-content d-none">
                     <h2 class="mb-4">Registro de Quinielas</h2>
-                    <div class="alert alert-info">
+                    <div class="alert alert-info admin-only">
                         <h4 class="alert-heading">Sección de Administrador</h4>
                         <p>Aquí puedes ver y gestionar todas las quinielas existentes.</p>
+                    </div>
+                    <div class="alert alert-info normal-user d-none">
+                        <h4 class="alert-heading">Registro de Quinielas</h4>
+                        <p>Aquí puedes ver las quinielas disponibles y registrar tus pronósticos. Como usuario normal, no puedes modificar la información general ni los resultados de los partidos.</p>
                     </div>
                     <div id="tabla-quinielas-container" class="card">
                         <div class="card-header bg-primary text-white">
@@ -921,7 +925,7 @@
                                     <i class="bi bi-trophy"></i> Partidos
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            <li class="nav-item admin-only d-none" role="presentation">
                                 <button class="nav-link" id="participantes-tab" data-bs-toggle="tab" data-bs-target="#participantes-tab-pane" type="button" role="tab" aria-controls="participantes-tab-pane" aria-selected="false">
                                     <i class="bi bi-people"></i> Participantes
                                 </button>
@@ -936,52 +940,58 @@
                                         <h5 class="mb-0">Información General</h5>
                                     </div>
                                     <div class="card-body">
-                                        <form id="form-editar-quiniela">
+                                        <form id="form-info-quiniela">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="nombre-quiniela-edicion" class="form-label">Nombre de la Quiniela</label>
-                                                        <input type="text" class="form-control" id="nombre-quiniela-edicion" required>
+                                                        <input type="text" class="form-control" id="nombre-quiniela-edicion" data-admin-editable="true" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="fecha-inicio-edicion" class="form-label">Fecha de Inicio</label>
-                                                        <input type="date" class="form-control" id="fecha-inicio-edicion" required>
+                                                        <input type="date" class="form-control" id="fecha-inicio-edicion" data-admin-editable="true" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="fecha-fin-edicion" class="form-label">Fecha de Fin</label>
-                                                        <input type="date" class="form-control" id="fecha-fin-edicion" required>
+                                                        <input type="date" class="form-control" id="fecha-fin-edicion" data-admin-editable="true" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="costo-quiniela-edicion" class="form-label">Costo de Participación</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control" id="costo-quiniela-edicion" data-admin-editable="true" min="0" step="0.01">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="premio-primero-edicion" class="form-label">Premio Primer Lugar</label>
+                                                        <input type="text" class="form-control" id="premio-primero-edicion" data-admin-editable="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="premio-segundo-edicion" class="form-label">Premio Segundo Lugar</label>
+                                                        <input type="text" class="form-control" id="premio-segundo-edicion" data-admin-editable="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="premio-tercero-edicion" class="form-label">Premio Tercer Lugar</label>
+                                                        <input type="text" class="form-control" id="premio-tercero-edicion" data-admin-editable="true">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="estado-quiniela-edicion" class="form-label">Estado</label>
-                                                        <select class="form-select" id="estado-quiniela-edicion">
+                                                        <select class="form-select" id="estado-quiniela-edicion" data-admin-editable="true">
                                                             <option value="activa">Activa</option>
                                                             <option value="pendiente">Pendiente</option>
                                                             <option value="completada">Completada</option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label for="costo-quiniela-edicion" class="form-label">Costo de Participación ($)</label>
-                                                        <input type="number" class="form-control" id="costo-quiniela-edicion" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="premio-primero-edicion" class="form-label">Premio Primer Lugar</label>
-                                                        <input type="text" class="form-control" id="premio-primero-edicion" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="premio-segundo-edicion" class="form-label">Premio Segundo Lugar</label>
-                                                        <input type="text" class="form-control" id="premio-segundo-edicion" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="premio-tercero-edicion" class="form-label">Premio Tercer Lugar</label>
-                                                        <input type="text" class="form-control" id="premio-tercero-edicion" required>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <button type="button" class="btn btn-primary" onclick="guardarCambiosQuiniela()">
+                                            <button type="button" class="btn btn-primary admin-only d-none" onclick="guardarCambiosQuiniela()">
                                                 <i class="bi bi-save"></i> Guardar Cambios
                                             </button>
+                                            <div class="alert alert-info mt-3 normal-user d-none">
+                                                <i class="bi bi-info-circle"></i> Solo el administrador puede modificar la información general de la quiniela.
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -1010,9 +1020,12 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <button type="button" class="btn btn-primary" onclick="guardarResultadosPartidos()">
+                                        <button type="button" class="btn btn-primary admin-only d-none" onclick="guardarResultadosPartidos()">
                                             <i class="bi bi-save"></i> Guardar Resultados
                                         </button>
+                                        <div class="alert alert-info mt-3 normal-user d-none">
+                                            <i class="bi bi-info-circle"></i> Solo el administrador puede guardar los resultados de los partidos.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1971,7 +1984,7 @@
             }
             
             // Botón de cerrar sesión
-            const btnLogout = document.getElementById('btn-logout');
+            const btnLogout = document.getElementById('logout-btn');
             console.log('Botón de logout:', btnLogout ? 'OK' : 'NO ENCONTRADO');
             
             if(btnLogout) {
@@ -1981,7 +1994,7 @@
                     window.handleLogout();
                 });
             } else {
-                console.error('No se encontró el botón de logout');
+                console.error('No se encontró el botón de logout con ID: logout-btn');
             }
             
             // Mostrar la sección inicial
